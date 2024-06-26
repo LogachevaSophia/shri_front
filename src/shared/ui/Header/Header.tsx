@@ -39,7 +39,7 @@ const Header: React.FC = () => {
             {isAuthenticated && <Button variant="outlined" onClick={() => dispatch(logout())}>
                 Выйти
             </Button>}
-            {!isAuthenticated && <Button variant="fullfied" onClick={() => {console.log("HII");setOpen(true)}}>
+            {!isAuthenticated && <Button variant="fullfied" onClick={() => {setOpen(true)}}>
                 Войти
             </Button>}
 

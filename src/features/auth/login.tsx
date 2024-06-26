@@ -8,7 +8,6 @@ import Button from '../../shared/ui/Button/Button';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../user/userSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
-import Spiner from '../../shared/ui/Spinner/Spinner';
 
 
 interface FormValues {
@@ -54,51 +53,49 @@ const Login: React.FC<LoginProps> = ({ close }) => {
             console.error('Login failed:', error);
         }
     };
-    const form =
-        (<Formik
+
+
+    return (
+        <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={handleLogin}
         >{({ values, errors, touched, handleChange }) => (
-            <Form style={{ width: "min-content", display: "flex", gap: "16px", flexDirection: "column" }}>
-                <Field
-                    name="username"
-                    as={Input}
-                    label="Логин"
-                    error={touched.username && errors.username ? errors.username : undefined}
-                    isRequired={true}
-                    placeholder={"Ввведите логин"}
-                    value={values.username}
-                    onChange={handleChange}
-                />
-                <Field
-                    name="password"
-                    as={Input}
-                    label="Пароль"
-                    isRequired={true}
-                    error={touched.password && errors.password ? errors.password : undefined}
-                    placeholder={"Ввведите Пароль"}
-                    value={values.password}
-                    onChange={handleChange}
-                />
-                <div style={{ display: "flex", gap: "8px" }}>
-                    <Button key="submit" type="submit">
-                        Войти
-                    </Button>
-                    <Button key="back" variant={"outlined"} >
-                        Отменить
-                    </Button>
-                </div>
+            <>
+                {isLoading ? <div>LOADING</div> : null}
 
-            </Form>)}</Formik>)
-    const loader = <Spiner />;
+                <Form style={{ width: "min-content", display: "flex", gap: "16px", flexDirection: "column" }}>
+                    <Field
+                        name="username"
+                        as={Input}
+                        label="Логин"
+                        error={touched.username && errors.username ? errors.username : undefined}
+                        isRequired={true}
+                        placeholder={"Ввведите логин"}
+                        value={values.username}
+                        onChange={handleChange}
+                    />
+                    <Field
+                        name="password"
+                        as={Input}
+                        label="Пароль"
+                        isRequired={true}
+                        error={touched.password && errors.password ? errors.password : undefined}
+                        placeholder={"Ввведите Пароль"}
+                        value={values.password}
+                        onChange={handleChange}
+                    />
+                    <div style={{ display: "flex", gap: "8px" }}>
+                        <Button key="submit" type="submit">
+                            Войти
+                        </Button>
+                        <Button key="back" variant={"outlined"} >
+                            Отменить
+                        </Button>
+                    </div>
 
-    return (
-        <div>
-            {isLoading ? loader : form}
-        </div>
-
-
+                </Form></>
+        )}</Formik>
     );
 };
 

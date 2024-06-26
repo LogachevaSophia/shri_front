@@ -8,7 +8,7 @@ export interface IButtonProps
     isDisabled?: boolean;
     variant?: ButtonVariant;
     isActive?: boolean;
-    onClick?: (e: React.MouseEvent) => void;
+    onclick?: (e: React.MouseEvent) => void;
     loading?: boolean;
 }
 export type ButtonVariant = "outlined" | "text" | "icon" | "fullfied";
@@ -19,10 +19,11 @@ const Button: React.FC<IButtonProps> = ({ className,
     type,
     variant = "fullfied",
     children = "Button",
-    onClick,
-    isActive = true,
+    onclick,
+    isActive = false,
     loading = false,
     ...rest }) => {
+
 
     return (
         <button
@@ -32,11 +33,13 @@ const Button: React.FC<IButtonProps> = ({ className,
             )}
             type={type}
             disabled={isActive}
-            onClick={onClick}>
+            onClick={() => console.log("sdbck")}
+            {...rest}>
             {children}
 
 
         </button>
+        
     )
 
 }
