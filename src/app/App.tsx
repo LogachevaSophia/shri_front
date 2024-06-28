@@ -1,13 +1,16 @@
 import React from 'react';
 import './App.css';
-import Header from '../shared/ui/Header/Header';
+import Header from '../widget/Header/Header';
 import Router from './Router';
 
 function App() {
   return (
     <>
-      <Header/>
-      <Router/>
+      <Header />
+      <div style={{marginTop: "calc( 88px + 16px)", marginBottom: "16px"}}>
+        <Router />
+      </div>
+
     </>
   );
 }
