@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 interface UserState {
   token: string | null;
   isAuthenticated: boolean;
-  user: any; // замените any на тип вашего пользователя, если он известен
+  user: any; 
 }
 
 const initialState: UserState = {

@@ -33,7 +33,7 @@ const Button: React.FC<IButtonProps> = ({ className,
             )}
             type={type}
             disabled={isActive}
-            onClick={() => console.log("sdbck")}
+            onClick={onclick}
             {...rest}>
             {children}
 

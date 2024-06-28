@@ -8,6 +8,8 @@ import Button from '../../shared/ui/Button/Button';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../user/userSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { message } from 'antd';
+import Spiner from '../../shared/ui/Spinner/Spinner';
 
 
 interface FormValues {
@@ -39,6 +41,7 @@ const Login: React.FC<LoginProps> = ({ close }) => {
         try {
             const resultAction = await loginMutation({ username: values.username, password: values.password });
             const result = resultAction.data;
+            
             if (result) {
                 const token = result.token;
                 dispatch(setToken(token));
@@ -48,9 +51,12 @@ const Login: React.FC<LoginProps> = ({ close }) => {
             } else {
 
                 console.error('Login failed: Unexpected result format');
+                message.error('Login failed: Unexpected result format')
             }
         } catch (error) {
             console.error('Login failed:', error);
+            message.error('Login failed: Unexpected result format')
+            
         }
     };
 
@@ -60,11 +66,12 @@ const Login: React.FC<LoginProps> = ({ close }) => {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={handleLogin}
+            style={{backgroundColor: "red"}}
         >{({ values, errors, touched, handleChange }) => (
             <>
-                {isLoading ? <div>LOADING</div> : null}
+                {isLoading ? <Spiner/> : null}
 
-                <Form style={{ width: "min-content", display: "flex", gap: "16px", flexDirection: "column" }}>
+                {!isLoading ? <Form style={{ width: "min-content", display: "flex", gap: "16px", flexDirection: "column" }}>
                     <Field
                         name="username"
                         as={Input}
@@ -89,12 +96,12 @@ const Login: React.FC<LoginProps> = ({ close }) => {
                         <Button key="submit" type="submit">
                             Войти
                         </Button>
-                        <Button key="back" variant={"outlined"} >
+                        <Button key="back" variant={"outlined"} type="button" onclick={() =>close()}>
                             Отменить
                         </Button>
                     </div>
 
-                </Form></>
+                </Form> : null}</>
         )}</Formik>
     );
 };

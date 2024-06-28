@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
-import styles from "./Input.module.scss"
+import React from "react";
+import styles from '../../ui/Input/Input.module.scss'
+import classnames from "classnames";
+// import classnames from "classnames";
 
 
 export interface inputProps {
@@ -7,26 +9,31 @@ export interface inputProps {
     label?: string;
     error?: string;
     isRequired: boolean;
-    onChange: ()=>void;
+    onChange: () => void;
 }
 
 
 const Input: React.FC<inputProps> = ({ label, error, isRequired = false, ...props }) => {
+    console.log(props)
     return (
         <div>
             <label>
                 <span>
                     {label}
-                    {isRequired && <span style={{ color: 'red' }}>*</span>} {/* Отображаем звездочку, если поле обязательно */}
+                    {isRequired && <span style={{ color: '#F04075' }}>*</span>} {/* Отображаем звездочку, если поле обязательно */}
                 </span>
 
+
+                <input 
                 
-                <input className={styles.input} {...props} style={{"borderRadius": "8px",padding: "10px 12px", border:"#E1E3E6 1px solid", color: "#ABABAB", marginTop:"4px", minWidth:"296px"}}/>
+                 {...props}
+                 className={classnames(styles.input, {[styles.error]: !!error})} 
+                  />
             </label>
             <br></br>
-            {error && <span style={{ color: 'red' }}>{error}</span>}
+            {error && <span style={{ color: '#F04075' }}>{error}</span>}
         </div>
-        
+
 
     )
 

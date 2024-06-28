@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { selectToken, setToken } from '../user/userSlice'; // Используем селектор для получения токена из стейта
 import { RootState } from '../../app/store';
-import { useDispatch } from 'react-redux';
-// const dispatch = useDispatch();
+
 const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -17,7 +16,6 @@ const api = createApi({
       else{
         if (localStorage.getItem("token")){
             headers.set('Authorization', `Bearer ${localStorage.getItem("token")}`);
-            // dispatch(setToken(localStorage.getItem("token")));
         }
 
       }
