@@ -5,17 +5,14 @@ import classNames from "classnames";
 
 type SearchInput = {
     placeholder: string,
+    onChange: (title: string) => void ,
 }
 
 
-const SearchInput: React.FC<SearchInput> = ({placeholder}) => {
+const SearchInput: React.FC<SearchInput> = ({ placeholder, onChange }) => {
 
     const [focused, setFocused] = useState(false);
     const [value, setValue] = useState("");
-
-    useEffect(() => {
-        console.log(focused);
-    }, [focused]);
 
     const onFocusEvent = (event: React.FocusEvent<HTMLInputElement>) => {
         if (event.type === "focus") {
@@ -30,7 +27,10 @@ const SearchInput: React.FC<SearchInput> = ({placeholder}) => {
 
     const onRemove = () => setValue("");
 
-    const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => setValue(event.target.value);
+    const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
+        setValue(event.target.value);
+        onChange(event.target.value);
+    }
 
 
     return (

@@ -8,9 +8,6 @@ export default function Search() {
     const [focused, setFocused] = useState(false)
     const [value, setValue] = useState('')
 
-    useEffect(() => {
-        console.log(focused)
-    }, [focused])
 
     const onFocusEvent = (event: React.FocusEvent<HTMLInputElement>) => {
         if (event.type === 'focus') {
@@ -24,7 +21,6 @@ export default function Search() {
     };
 
     const onRemove = () => {
-        console.log("delete")
         setValue('')
     }
 

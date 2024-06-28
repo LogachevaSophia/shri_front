@@ -6,8 +6,11 @@ type QueryResultType = {
   total_pages: number
 }
 
-type QuerySearchParams = {
-  title?:string
+export type QuerySearchParams = {
+  title?:string,
+  year?: string,
+  genre?:string,
+  page?: number
 }
 
 
@@ -16,7 +19,13 @@ export const searchApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3030/api/v1/' }),
   endpoints: (builder) => ({
     getSearchResults: builder.query<QueryResultType, QuerySearchParams>({
-      query: () => 'search',
+      query: (params) => {
+        const query = new URLSearchParams(params as any).toString();
+        // console.log(query)
+        if (query)
+          return `search?${query}`
+        return 'search'
+      },
     }),
   }),
 });
