@@ -13,7 +13,7 @@ const HomePage: React.FC = () => {
     const [searchParams, setSearchParams] = useState<QuerySearchParams>({});
     const [currentPage, setCurrentPage] = useState(1);
 
-    const { data, error, isLoading } = useGetSearchResultsQuery({
+    const { data, error, isLoading, isFetching } = useGetSearchResultsQuery({
         ...searchParams,
         page: currentPage,
     });
@@ -43,6 +43,7 @@ const HomePage: React.FC = () => {
                 params.set(key, value as keyof typeof updatedParams);
             }
         });
+        console.log(params.toString())
 
         navigate({ search: params.toString() });
         setCurrentPage(1);
@@ -60,12 +61,13 @@ const HomePage: React.FC = () => {
     };
 
     const handlePageChange = (page: number) => {
+        console.log("page", page)
         setCurrentPage(page);
     };
     return (
         <div style={{ width: "calc( 100% - 50px)", margin: "0 auto", display: "flex", gap: "16px" }} className="container">
             <Filter onChange={handleFilterChange} />
-            {!isLoading ? 
+            {!isLoading && !isFetching ? 
                 <MovieList cards={data?.search_result || []} onChangeInput={handleSearchChange} totalPages={data?.total_pages || 1} onPageChange={handlePageChange} currentPage={currentPage} /> 
                 : <Spinner />}
         </div>

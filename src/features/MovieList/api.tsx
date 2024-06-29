@@ -14,6 +14,11 @@ export type QuerySearchParams = {
 }
 
 
+type MovieParams = {
+  id: string
+}
+
+
 export const searchApi = createApi({
   reducerPath: 'searchApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3030/api/v1/' }),
@@ -27,7 +32,10 @@ export const searchApi = createApi({
         return 'search'
       },
     }),
+    getMovieById: builder.query<MovieCardType, MovieParams>({
+      query: ({id}) => `movie/${id}`,
+    }),
   }),
 });
 
-export const { useGetSearchResultsQuery } = searchApi;
+export const { useGetSearchResultsQuery, useGetMovieByIdQuery } = searchApi;

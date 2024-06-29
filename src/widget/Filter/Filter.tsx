@@ -26,6 +26,31 @@ type Genre = {
 type FilterProps = {
     onChange: (params: { genre?: string; year?: string }) => void;
 };
+const GENRES = {
+    '0': 'Не выбран',
+    comedy: 'Комедия',
+    drama: 'Драма',
+    action: 'Боевик',
+    thriller: 'Триллер',
+    horror: 'Ужасы',
+    family: 'Семейный',
+    cartoon: 'Анимированный',
+    fantasy: 'Фэнтези',
+    romance: 'Романтика',
+    adventure: 'Приключения',
+    musical: 'Мьюзикл',
+    war: 'Военный',
+}
+
+const YEARS = {
+    '0': 'Не выбран',
+    '2009': '2009',
+    '2008': '2008',
+    '2007': '2007',
+    '2006': '2006',
+    '1990-2005': '1990-2005',
+    '1950-1989': '1950-1989',
+}
 
 
 const Filter:React.FC<FilterProps> = ({onChange}) => {
@@ -39,9 +64,14 @@ const Filter:React.FC<FilterProps> = ({onChange}) => {
     const [selectedYear, setSelectedYear] = useState<string | null>(searchParams.get("year"));
 
 
-    const genresOptions: Genre[] = Object.entries(GENRES_MAP).map(([value, label]) => ({
+    const genresOptions: Genre[] = Object.entries(GENRES).map(([value, label]) => ({
         value: value as keyof typeof GENRES_MAP,
         label: label as typeof GENRES_MAP[keyof typeof GENRES_MAP],
+    }));
+
+    const yearOptions = Object.entries(YEARS).map(([value, label]) => ({
+        value: value as keyof typeof YEARS,
+        label: label as typeof YEARS[keyof typeof YEARS],
     }));
 
     useEffect(() => {
@@ -74,20 +104,7 @@ const Filter:React.FC<FilterProps> = ({onChange}) => {
             </div>
             <div className={styles["container_select"]}>
                 <label htmlFor="">Год выпуска</label>
-                <SelectCustom placeholder="Выберите год" value={null} options={[
-                    {
-                        value: 'jack',
-                        label: 'Jack',
-                    },
-                    {
-                        value: 'lucy',
-                        label: 'Lucy',
-                    },
-                    {
-                        value: 'tom',
-                        label: 'Tom',
-                    },
-                ]} />
+                <SelectCustom placeholder="Выберите год" value={null} options={yearOptions} onChange={(value) => handleYearChange(value)}/>
             </div>
 
         </div>
