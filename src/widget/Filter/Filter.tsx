@@ -53,7 +53,7 @@ const YEARS = {
 }
 
 
-const Filter:React.FC<FilterProps> = ({onChange}) => {
+const Filter: React.FC<FilterProps> = ({ onChange }) => {
 
 
 
@@ -75,11 +75,19 @@ const Filter:React.FC<FilterProps> = ({onChange}) => {
     }));
 
     useEffect(() => {
+
+
         const params = new URLSearchParams();
         if (selectedGenre) params.set("genre", selectedGenre);
         if (selectedYear) params.set("release_year", selectedYear);
 
-        navigate({ search: params.toString() });
+        const query = params.toString();
+
+
+        const validGenre = selectedGenre && selectedGenre !== "0" ? selectedGenre : "";
+        const validYear = selectedYear && selectedYear !== "0" ? selectedYear : "";
+        onChange({ genre: validGenre, release_year: validYear });
+
     }, [selectedGenre, selectedYear, navigate]);
 
     const handleGenreChange = (genre: string) => {
@@ -100,11 +108,17 @@ const Filter:React.FC<FilterProps> = ({onChange}) => {
             </h1>
             <div className={styles["container_select"]}>
                 <label htmlFor="">Жанр</label>
-                <SelectCustom placeholder="Выберите жанр" options={genresOptions} onChange={(value) => handleGenreChange(value)} value={null}/>
+                <SelectCustom
+                    options={genresOptions}
+                    onChange={(value: string) => handleGenreChange(value)}
+                    value={selectedGenre || '0'} />
             </div>
             <div className={styles["container_select"]}>
                 <label htmlFor="">Год выпуска</label>
-                <SelectCustom placeholder="Выберите год" value={null} options={yearOptions} onChange={(value) => handleYearChange(value)}/>
+                <SelectCustom
+                    options={yearOptions}
+                    onChange={(value: string) => handleYearChange(value)}
+                    value={selectedYear || '0'} />
             </div>
 
         </div>

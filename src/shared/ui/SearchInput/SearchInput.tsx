@@ -6,26 +6,25 @@ import { useLocation, useParams } from "react-router-dom";
 
 type SearchInput = {
     placeholder: string,
-    onChange: (title: string) => void ,
+    onChange: (title: string) => void,
 }
 
 
 const SearchInput: React.FC<SearchInput> = ({ placeholder, onChange }) => {
 
     const [focused, setFocused] = useState(false);
-    const params = useParams<{ title?: string }>();
     const [value, setValue] = useState("");
     const location = useLocation();
 
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const titleParam = searchParams.get("title");
-    
+
         if (titleParam) {
             setValue(titleParam)
-          console.log("Title from URL:", titleParam);
+            console.log("Title from URL:", titleParam);
         }
-      }, [location.search]);
+    }, [location.search]);
 
     const onFocusEvent = (event: React.FocusEvent<HTMLInputElement>) => {
         if (event.type === "focus") {
@@ -38,7 +37,10 @@ const SearchInput: React.FC<SearchInput> = ({ placeholder, onChange }) => {
         setFocused(event.type === "focus");
     };
 
-    const onRemove = () => setValue("");
+    const onRemove = () => {
+        setValue("");
+        onChange("");
+    }
 
     const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value);
