@@ -67,9 +67,10 @@ const HomePage: React.FC = () => {
     return (
         <div style={{ width: "calc( 100% - 50px)", margin: "0 auto", display: "flex", gap: "16px" }} className="container">
             <Filter onChange={handleFilterChange} />
-            {!isLoading && !isFetching ? 
-                <MovieList cards={data?.search_result || []} onChangeInput={handleSearchChange} totalPages={data?.total_pages || 1} onPageChange={handlePageChange} currentPage={currentPage} /> 
+            {!isLoading && !isFetching ?
+                <MovieList cards={data?.search_result || []} onChangeInput={handleSearchChange} totalPages={data?.total_pages || 1} onPageChange={handlePageChange} currentPage={currentPage} />
                 : <Spinner />}
+
         </div>
     );
 };

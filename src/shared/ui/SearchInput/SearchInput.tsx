@@ -2,6 +2,7 @@ import React, { ChangeEvent, useEffect, useRef, useState } from "react"
 
 import styles from "./SerachInput.module.scss"
 import classNames from "classnames";
+import { useLocation, useParams } from "react-router-dom";
 
 type SearchInput = {
     placeholder: string,
@@ -12,7 +13,19 @@ type SearchInput = {
 const SearchInput: React.FC<SearchInput> = ({ placeholder, onChange }) => {
 
     const [focused, setFocused] = useState(false);
+    const params = useParams<{ title?: string }>();
     const [value, setValue] = useState("");
+    const location = useLocation();
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        const titleParam = searchParams.get("title");
+    
+        if (titleParam) {
+            setValue(titleParam)
+          console.log("Title from URL:", titleParam);
+        }
+      }, [location.search]);
 
     const onFocusEvent = (event: React.FocusEvent<HTMLInputElement>) => {
         if (event.type === "focus") {
@@ -34,17 +47,6 @@ const SearchInput: React.FC<SearchInput> = ({ placeholder, onChange }) => {
 
 
     return (
-        // <div><input
-        //     onChange={onChangeInput}
-        //     onBlur={onFocusEvent}
-        //     onFocus={onFocusEvent}
-        //     value={value}
-        // // className={classNames({ [styles.active]: focused })}
-        // />
-        //     <button className="remove" onClick={onRemove}>
-        //         x
-        //     </button>
-        // </div>
         <div className={classNames(styles["search-input-container"], { [styles.active]: value })}>
             <input
                 className={classNames(styles["search-input"], { [styles.active]: value })}

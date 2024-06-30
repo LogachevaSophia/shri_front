@@ -16,9 +16,11 @@ const MovieList: React.FC<List> = ({ cards, onChangeInput,currentPage, totalPage
 
     return (
         <div>
+
             <SearchInput placeholder="Поиск..." onChange={onChangeInput}/>
             {cards.map(el => <MovieCard {...el} key={el?.id} onClick={()=> navigate(`movie/${el?.id}`)}/>)}
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
+            {cards.length==0 && <><br /><label>Фильмы не найдены</label></>}
+            {cards.length>0 && <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />}
         </div>
     )
 }
