@@ -8,7 +8,7 @@ type QueryResultType = {
 
 export type QuerySearchParams = {
   title?:string,
-  year?: string,
+  release_year?: string,
   genre?:string,
   page?: number
 }

@@ -21,17 +21,17 @@ const HomePage: React.FC = () => {
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const genre = params.get("genre") || undefined;
-        const year = params.get("year") || undefined;
+        const release_year = params.get("release_year") || undefined;
         const title = params.get("title") || undefined;
         const updatedParams: QuerySearchParams = {
             ...(genre && { genre }),
-            ...(year && { year }),
+            ...(release_year && { release_year }),
             ...(title && { title }),
         };
         setSearchParams(updatedParams);
     }, [location.search]);
 
-    const handleFilterChange = useCallback((newParams: { genre?: string; year?: string; title?: string }) => {
+    const handleFilterChange = useCallback((newParams: { genre?: string; release_year?: string; title?: string }) => {
         const updatedParams = { ...searchParams, ...newParams };
         setSearchParams(updatedParams);
 

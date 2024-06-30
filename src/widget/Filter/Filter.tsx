@@ -24,7 +24,7 @@ type Genre = {
 };
 
 type FilterProps = {
-    onChange: (params: { genre?: string; year?: string }) => void;
+    onChange: (params: { genre?: string; release_year?: string }) => void;
 };
 const GENRES = {
     '0': 'Не выбран',
@@ -61,7 +61,7 @@ const Filter:React.FC<FilterProps> = ({onChange}) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [selectedGenre, setSelectedGenre] = useState<string | null>(searchParams.get("genre"));
-    const [selectedYear, setSelectedYear] = useState<string | null>(searchParams.get("year"));
+    const [selectedYear, setSelectedYear] = useState<string | null>(searchParams.get("release_year"));
 
 
     const genresOptions: Genre[] = Object.entries(GENRES).map(([value, label]) => ({
@@ -77,7 +77,7 @@ const Filter:React.FC<FilterProps> = ({onChange}) => {
     useEffect(() => {
         const params = new URLSearchParams();
         if (selectedGenre) params.set("genre", selectedGenre);
-        if (selectedYear) params.set("year", selectedYear);
+        if (selectedYear) params.set("release_year", selectedYear);
 
         navigate({ search: params.toString() });
     }, [selectedGenre, selectedYear, navigate]);
@@ -87,9 +87,9 @@ const Filter:React.FC<FilterProps> = ({onChange}) => {
         onChange({ genre });
     };
 
-    const handleYearChange = (year: string) => {
-        setSelectedYear(year);
-        onChange({ year });
+    const handleYearChange = (release_year: string) => {
+        setSelectedYear(release_year);
+        onChange({ release_year });
     };
 
 
