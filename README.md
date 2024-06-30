@@ -1,4 +1,5 @@
-
+Ссыль на next: 
+https://github.com/LogachevaSophia/schri_front_next
 # React
 ## Базовые требования:
 
