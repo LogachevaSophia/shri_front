@@ -2,6 +2,7 @@ import React from "react";
 
 import { Modal as ModalAnt } from "antd";
 import Button from "../Button/Button";
+import ReactDOM from "react-dom";
 
 
 interface ModalProps {
@@ -9,12 +10,12 @@ interface ModalProps {
     // onClick?: () => void; // Обработчик клика
     children: React.ReactNode; // Текст или вложенные компоненты
     // className?: string; // Дополнительный класс для стилизации
-    onCancel: ()=> void;
+    onCancel: () => void;
     title: string;
     width: any;
 }
 
-const Modal: React.FC<ModalProps> = ({open, children, title, onCancel, ...props}) => {
+const Modal: React.FC<ModalProps> = ({ open, children, title, onCancel, ...props }) => {
     const footer = [
         // <Button key="back" >
         //   Войти
@@ -22,9 +23,8 @@ const Modal: React.FC<ModalProps> = ({open, children, title, onCancel, ...props}
         // <Button key="submit" variant={"outlined"} >
         //   Отменить
         // </Button>,
-      ]
-
-    return (
+    ]
+    return ReactDOM.createPortal(
 
         <ModalAnt
             title={title}
@@ -32,10 +32,10 @@ const Modal: React.FC<ModalProps> = ({open, children, title, onCancel, ...props}
             onCancel={onCancel}
             footer={null}
             {...props}
-            >
-                {children}
+        >
+            {children}
 
-        </ModalAnt>
+        </ModalAnt>, document.getElementById('modal-root') as HTMLElement
     )
 
 
