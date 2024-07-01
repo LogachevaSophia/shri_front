@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Header.module.scss";
 import Button from "../../shared/ui/Button/Button";
-import Modal from "../../shared/ui/Modal/Modal";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import Login from "../../features/auth/login";
 import { logout, setToken } from "../../features/user/userSlice";
+import ModalWrapper from "../../shared/ui/Modal/Modal";
 
 const Header: React.FC = () => {
     // Работа со стэйт менеджером
@@ -39,14 +39,9 @@ const Header: React.FC = () => {
                 </Button>
             )}
 
-            <Modal
-                open={open}
-                onCancel={() => setOpen(false)}
-                title={"Авторизация"}
-                width="min-content"
-            >
+            <ModalWrapper isOpen={open} closeModal={() => setOpen(false)}>
                 <Login close={() => setOpen(false)} />
-            </Modal>
+            </ModalWrapper>
         </header>
     );
 };

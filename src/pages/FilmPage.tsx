@@ -29,6 +29,7 @@ const FilmPage: React.FC = () => {
         <>
 
             <BigMovieCard {...defaultMovieData} />
+            Актёры:
             <CustomCarousel slidesToShow={data?.actors && data?.actors?.length > 5  ? 5 : data?.actors?.length}>
                 {data?.actors?.map((actor, index) => (
                     <div className={styles.card_actor} key={index}>
