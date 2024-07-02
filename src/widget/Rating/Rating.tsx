@@ -7,11 +7,12 @@ import debounce from "lodash.debounce"
 type RatingType = {
     rating: number,
     onChange: (rating: number) => void
-    onChangeRated?: () => void
+    onChangeRated?: () => void,
+    refetch?: () => void,
 }
 
 
-const Rating: React.FC<RatingType> = ({ rating, onChange, onChangeRated }) => {
+const Rating: React.FC<RatingType> = ({ rating, onChange, onChangeRated, refetch }) => {
     const maxStars = 5;
 
     const filledStars = Math.min(rating, maxStars); // Ограничиваем n максимальным числом звезд
@@ -26,12 +27,7 @@ const Rating: React.FC<RatingType> = ({ rating, onChange, onChangeRated }) => {
     const handleStarHover = (index: number) => {
         setHoveredIndex(index);
     };
-    const refetch = useCallback(() => {
-        dispatch(fetchMovies(searchParams));
-    }, [searchParams, dispatch]);
 
-    const debouncedRefetch = useMemo(() => debounce(refetch, 2000), [refetch]);
-    
 
     const stars = Array.from({ length: maxStars }, (_, index) => {
 
@@ -39,7 +35,8 @@ const Rating: React.FC<RatingType> = ({ rating, onChange, onChangeRated }) => {
             <svg onClick={(e) => {
                 e.stopPropagation();
                 onChange(index + 1);
-                debouncedRefetch();
+                if (refetch)
+                    refetch();
             }} width="16" height="16" viewBox="0 0 16 16"
                 xmlns="http://www.w3.org/2000/svg"
                 onMouseEnter={() => handleStarHover(index)}

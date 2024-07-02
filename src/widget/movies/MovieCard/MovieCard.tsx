@@ -17,7 +17,8 @@ export type MovieCardType = {
     children?: React.ReactNode;
     actors: actor[],
     onClick?: () => void,
-    onChangeRated?: () => void
+    onChangeRated?: () => void,
+    refetch?: () => void,
 
 }
 

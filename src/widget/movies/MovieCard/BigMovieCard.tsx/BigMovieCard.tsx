@@ -10,7 +10,7 @@ export type actor = {
     photo: string
 }
 
-const BigMovieCard: React.FC<MovieCardType> = ({ poster, title, genre, release_year, description, rating, id, actors }) => {
+const BigMovieCard: React.FC<MovieCardType> = ({ poster, title, genre, release_year, description, rating, id, actors , refetch}) => {
     const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
     const [selectedRating, setSelectedRating] = useState<number>(() => {
         const storedRating = localStorage.getItem(`selectedRating-${id}`);
@@ -38,7 +38,7 @@ const BigMovieCard: React.FC<MovieCardType> = ({ poster, title, genre, release_y
                     <h1>{title}</h1>
                     {isAuthenticated && (
                         <div className={styles.score}>
-                            <Rating rating={selectedRating} onChange={handleChangeRating} />
+                            <Rating rating={selectedRating} onChange={handleChangeRating} refetch={refetch}/>
                         </div>
                     )}
                 </div>
