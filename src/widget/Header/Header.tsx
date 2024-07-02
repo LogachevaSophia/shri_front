@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Header.module.scss";
 import Button from "../../shared/ui/Button/Button";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { RootState } from '../../services/store';
 import Login from "../../features/auth/login";
 import { logout, setToken } from "../../services/user/userSlice";
 import ModalWrapper from "../../shared/ui/Modal/Modal";
+import useAuth from "./hooks/AuthHook";
 
 const Header: React.FC = () => {
     // Работа со стэйт менеджером
-    const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
+    const isAuthenticated = useAuth()
     const [open, setOpen] = useState<boolean>(false);
     const dispatch = useDispatch();
 

@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 import styles from "./MovieCard.module.scss";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../services/store";
 import Rating from "../../../Rating/Rating";
 import { MovieCardType } from "../MovieCard";
-import CustomCarousel from "../../../../shared/ui/Carousel/Carouse";
+import useAuth from "../../../Header/hooks/AuthHook";
 export type actor = {
     name: string,
     photo: string
 }
 
 const BigMovieCard: React.FC<MovieCardType> = ({ poster, title, genre, release_year, description, rating, id, actors , refetch}) => {
-    const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
+    const isAuthenticated = useAuth();
     const [selectedRating, setSelectedRating] = useState<number>(() => {
         const storedRating = localStorage.getItem(`selectedRating-${id}`);
         return storedRating ? parseFloat(storedRating) : parseFloat(rating);

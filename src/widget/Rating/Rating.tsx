@@ -1,8 +1,6 @@
-import React, { useCallback, useMemo, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { AppDispatch, RootState } from "../../services/store"
-import { fetchMovies } from "../../services/Movie/thunkMovie"
-import debounce from "lodash.debounce"
+import React, {useState } from "react"
+
+
 
 type RatingType = {
     rating: number,
@@ -19,10 +17,7 @@ const Rating: React.FC<RatingType> = ({ rating, onChange, onChangeRated, refetch
 
 
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-    const dispatch: AppDispatch = useDispatch();
-    const searchParams = useSelector((state: RootState) => state.movies.search_params);
-
-
+  
 
     const handleStarHover = (index: number) => {
         setHoveredIndex(index);

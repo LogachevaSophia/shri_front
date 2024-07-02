@@ -5,7 +5,7 @@ import { baseQuery } from '../Movie/fetchBaseQuery';
 
 
 
-const baseQueryWithErrorHandling = async (args: any, api: any, extraOptions: any) => {
+export const baseQueryWithErrorHandling = async (args: any, api: any, extraOptions: any) => {
   let result = await baseQuery(args, api, extraOptions);
 
   if (result.error) {

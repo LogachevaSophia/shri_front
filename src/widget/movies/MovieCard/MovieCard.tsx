@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "./MovieCard.module.scss"
 import Rating from "../../Rating/Rating";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../services/store";
 import { actor } from "./BigMovieCard.tsx/BigMovieCard";
+import useAuth from "../../Header/hooks/AuthHook";
 
 
 export type MovieCardType = {
@@ -23,7 +22,7 @@ export type MovieCardType = {
 }
 
 const MovieCard: React.FC<MovieCardType> = ({ poster, title, genre, release_year, description, rating, children, id, onClick, onChangeRated }) => {
-    const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
+    const isAuthenticated = useAuth();
     const [selectedRating, setSelectedRating] = useState<number>(() => {
         // Инициализация из localStorage при первоначальной загрузке
         const storedRating = localStorage.getItem(`selectedRating-${id}`);
