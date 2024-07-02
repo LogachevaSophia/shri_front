@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import styles from "./Header.module.scss";
 import Button from "../../shared/ui/Button/Button";
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../app/store';
+import { RootState } from '../../services/store';
 import Login from "../../features/auth/login";
-import { logout, setToken } from "../../features/user/userSlice";
+import { logout, setToken } from "../../services/user/userSlice";
 import ModalWrapper from "../../shared/ui/Modal/Modal";
 
 const Header: React.FC = () => {

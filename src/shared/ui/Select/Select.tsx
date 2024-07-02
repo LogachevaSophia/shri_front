@@ -26,7 +26,6 @@ const SelectCustom:React.FC<SelectProps> = ({ options, value, onChange }) => {
     onChange(optionValue);
     setIsOpen(false);
   };
-  console.log(options)
 
   return (
     <div className={classNames(styles["custom-select-container"], { [styles.open]: isOpen })} onClick={handleSelectClick}>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./MovieCard.module.scss"
 import Rating from "../../Rating/Rating";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../app/store";
+import { RootState } from "../../../services/store";
 import { actor } from "./BigMovieCard.tsx/BigMovieCard";
 
 
@@ -16,37 +16,33 @@ export type MovieCardType = {
     rating: string,
     children?: React.ReactNode;
     actors: actor[],
-    onClick?: () =>  void,
+    onClick?: () => void,
+    onChangeRated?: () => void
 
 }
 
-const MovieCard: React.FC<MovieCardType> = ({ poster, title, genre, release_year, description, rating, children, id, onClick }) => {
+const MovieCard: React.FC<MovieCardType> = ({ poster, title, genre, release_year, description, rating, children, id, onClick, onChangeRated }) => {
     const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
     const [selectedRating, setSelectedRating] = useState<number>(() => {
         // Инициализация из localStorage при первоначальной загрузке
         const storedRating = localStorage.getItem(`selectedRating-${id}`);
-        return !storedRating ?  parseFloat(rating):  parseInt(storedRating) ;
+        return !storedRating ? parseFloat(rating) : parseInt(storedRating);
     });
 
 
-    useEffect(()=>{
+    useEffect(() => {
 
         const storedRating = localStorage.getItem(`selectedRating-${id}`);
-        setSelectedRating(!storedRating ?  parseFloat(rating):  parseInt(storedRating) )
+        setSelectedRating(!storedRating ? parseFloat(rating) : parseInt(storedRating))
 
     }, [rating])
 
 
     const handleChangeRating = (rating: number) => {
         setSelectedRating(rating)
-        
+        localStorage.setItem(`selectedRating-${id}`, rating.toString())
+
     }
-
-    useEffect(()=>{
-        localStorage.setItem(`selectedRating-${id}`, selectedRating.toString())
-        console.log("selectedRating", selectedRating)
-
-    },[selectedRating])
 
     return (
         <div className={styles.card} onClick={onClick}>
@@ -87,7 +83,7 @@ const MovieCard: React.FC<MovieCardType> = ({ poster, title, genre, release_year
                     </table>
                 </div>
                 {isAuthenticated && <div className={styles.score}>
-                    <Rating rating={selectedRating} onChange={handleChangeRating}/>
+                    <Rating rating={selectedRating} onChange={handleChangeRating} onChangeRated={onChangeRated}/>
                 </div>}
 
             </div>

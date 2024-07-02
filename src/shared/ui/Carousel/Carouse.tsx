@@ -8,7 +8,6 @@ type Props = {
 const CustomCarousel: React.FC<Props> = ({ children , slidesToShow = 1, slidesToScroll = 1, ...props}) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const totalSlides = React.Children.count(children);
-    console.log(slidesToShow)
 
     const nextSlide = () => {
         setCurrentIndex((prevIndex) => {

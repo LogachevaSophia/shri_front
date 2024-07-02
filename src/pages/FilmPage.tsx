@@ -1,5 +1,5 @@
 import React from "react"
-import { useGetMovieByIdQuery } from "../features/MovieList/api";
+import { useGetMovieByIdQuery } from "../services/Movie/apiMovie";
 import { useParams } from "react-router-dom";
 import { MovieCardType } from "../widget/movies/MovieCard/MovieCard";
 import BigMovieCard from "../widget/movies/MovieCard/BigMovieCard.tsx/BigMovieCard";

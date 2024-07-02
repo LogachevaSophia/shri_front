@@ -22,7 +22,6 @@ const SearchInput: React.FC<SearchInput> = ({ placeholder, onChange }) => {
 
         if (titleParam) {
             setValue(titleParam)
-            console.log("Title from URL:", titleParam);
         }
     }, [location.search]);
 

@@ -10,15 +10,16 @@ export type List = {
     currentPage: number, 
     totalPages: number, 
     onPageChange: (page: number) => void
+    onChangeRated?: () => void;
 }
-const MovieList: React.FC<List> = ({ cards, onChangeInput,currentPage, totalPages, onPageChange}) => {
+const MovieList: React.FC<List> = ({ cards, onChangeInput,currentPage, totalPages, onPageChange, onChangeRated}) => {
     const navigate = useNavigate();
 
     return (
         <div>
 
             <SearchInput placeholder="Поиск..." onChange={onChangeInput}/>
-            {cards.map(el => <MovieCard {...el} key={el?.id} onClick={()=> navigate(`movie/${el?.id}`)}/>)}
+            {cards.map(el => <MovieCard {...el} key={el?.id} onClick={()=> navigate(`movie/${el?.id}`)} onChangeRated={onChangeRated}/>)}
             {cards.length==0 && <><br /><label>Фильмы не найдены</label></>}
             {cards.length>0 && <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />}
         </div>

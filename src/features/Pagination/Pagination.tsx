@@ -10,8 +10,6 @@ type PaginationProps = {
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
     const isFirstPage = currentPage === 1;
     const isLastPage = currentPage === totalPages;
-    console.log(totalPages)
-    console.log(currentPage === totalPages)
 
     const handlePageChange = (page: number) => {
         if (page >= 1 && page <= totalPages) {

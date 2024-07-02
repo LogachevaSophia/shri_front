@@ -1,12 +1,12 @@
 
-import React, { useState } from 'react';
-import { useLoginMutation } from './api';
+import React from 'react';
+import { useLoginMutation } from '../../services/auth/api';
 import { Field, Form, Formik } from 'formik';
 import Input from '../../shared/ui/Input/Input';
 import * as Yup from 'yup';
 import Button from '../../shared/ui/Button/Button';
 import { useDispatch } from 'react-redux';
-import { setToken } from '../user/userSlice';
+import { setToken } from '../../services/user/userSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 // import { message } from 'antd';
 import Spiner from '../../shared/ui/Spinner/Spinner';
@@ -35,8 +35,8 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ close }) => {
 
     const dispatch = useDispatch();
-    const [loginMutation, { isLoading }] = useLoginMutation();
-
+    const [loginMutation, { isLoading, error }] = useLoginMutation();
+   
     const handleLogin = async (values: FormValues) => {
         try {
             const resultAction = await loginMutation({ username: values.username, password: values.password });

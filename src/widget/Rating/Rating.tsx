@@ -1,29 +1,46 @@
-import React, { useState } from "react"
+import React, { useCallback, useMemo, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { AppDispatch, RootState } from "../../services/store"
+import { fetchMovies } from "../../services/Movie/thunkMovie"
+import debounce from "lodash.debounce"
 
 type RatingType = {
     rating: number,
-    onChange: (rating: number)=> void
+    onChange: (rating: number) => void
+    onChangeRated?: () => void
 }
 
 
-const Rating: React.FC<RatingType> = ({ rating, onChange }) => {
+const Rating: React.FC<RatingType> = ({ rating, onChange, onChangeRated }) => {
     const maxStars = 5;
 
     const filledStars = Math.min(rating, maxStars); // Ограничиваем n максимальным числом звезд
 
 
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-    
+    const dispatch: AppDispatch = useDispatch();
+    const searchParams = useSelector((state: RootState) => state.movies.search_params);
+
+
 
     const handleStarHover = (index: number) => {
         setHoveredIndex(index);
     };
+    const refetch = useCallback(() => {
+        dispatch(fetchMovies(searchParams));
+    }, [searchParams, dispatch]);
+
+    const debouncedRefetch = useMemo(() => debounce(refetch, 2000), [refetch]);
+    
 
     const stars = Array.from({ length: maxStars }, (_, index) => {
 
-        // if (index<filledStars){
-        return <div style={{ display: "flex", flexDirection: "column", textAlign: "center", cursor:"pointer" }} key={index}>
-            <svg onClick={()=> onChange(index+1)}width="16" height="16" viewBox="0 0 16 16"
+        return <div style={{ display: "flex", flexDirection: "column", textAlign: "center", cursor: "pointer" }} key={index}>
+            <svg onClick={(e) => {
+                e.stopPropagation();
+                onChange(index + 1);
+                debouncedRefetch();
+            }} width="16" height="16" viewBox="0 0 16 16"
                 xmlns="http://www.w3.org/2000/svg"
                 onMouseEnter={() => handleStarHover(index)}
                 onMouseLeave={() => setHoveredIndex(null)}>
@@ -31,7 +48,7 @@ const Rating: React.FC<RatingType> = ({ rating, onChange }) => {
                     fill={hoveredIndex !== null && index <= hoveredIndex ? "#ABABAB" : index < filledStars ? "#FF5500" : "none"}
                     stroke={index >= filledStars ? "#ABABAB" : "none"} />
             </svg>
-            <label>{index+1}</label>
+            <label>{index + 1}</label>
         </div>
 
     });

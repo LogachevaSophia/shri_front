@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./MovieCard.module.scss";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../../app/store";
+import { RootState } from "../../../../services/store";
 import Rating from "../../../Rating/Rating";
 import { MovieCardType } from "../MovieCard";
 import CustomCarousel from "../../../../shared/ui/Carousel/Carouse";
